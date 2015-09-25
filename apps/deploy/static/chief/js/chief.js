@@ -2,16 +2,16 @@
     "strict"
 
     window.Chief = {
-        ViewModels: {},
+        ViewModels: {}
     };
 
     Chief.ViewModels.InitiateDeploy = function() {
         var self = this;
         self.env = ko.observable(null);
         self.env.subscribe(function(newEnv) {
-            $.post('/hq/chief/prepare/', { env: newEnv }).done(function(response) {
+            $.post(Chief.PrepareUrl, { env: newEnv }).done(function(response) {
                 console.log(response);
-                return $.get('/hq/chief/submodules/', { env: newEnv }).done(function(response) {
+                return $.get(Chief.SubmodulesUrl, { env: newEnv }).done(function(response) {
                     console.log(response);
                     self.submodules(response.submodules);
                 });
@@ -33,12 +33,12 @@
     };
     Chief.ViewModels.PreviousReleases.prototype.init = function() {
         var self = this;
-        $.get('/hq/chief/releases').done(function(response) {
+        $.get(Chief.ReleasesUrl).done(function(response) {
             console.log(response);
             self.environments(_.keys(response));
             _.each(response, function(releases, env) {
                 response[env] = _.map(releases, self.parseRelease);
-            })
+            });
             self.releases(response);
         });
     };
@@ -53,9 +53,4 @@
         }
 
     };
-
-
-    ko.applyBindings(new Chief.ViewModels.InitiateDeploy(), $('#deploy-modal')[0]);
-    ko.applyBindings(new Chief.ViewModels.PreviousReleases(), $('#previous-releases')[0]);
-
 })();

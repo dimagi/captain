@@ -1,12 +1,7 @@
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from django.utils.decorators import method_decorator
 from django.views.generic import View, TemplateView
-
-# from corehq.apps.domain.decorators import require_superuser
-# from corehq.apps.hqwebapp.views import BasePageView
-# from dimagi.utils.web import JsonResponse
 
 from .models import Deploy
 from .exceptions import DeployAlreadyInProgress
@@ -18,7 +13,7 @@ from .utils import (
     get_releases,
 )
 
-ENVIRONMENTS = ['staging', 'production', 'staging']
+ENVIRONMENTS = ['staging', 'production', 'india']
 
 
 class ChiefDeploy(View):
@@ -67,11 +62,10 @@ class ChiefDeployHook(View):
         return HttpResponse('Successfully added stage')
 
 
-
 class BasePageView(TemplateView):
     urlname = None  # name of the view used in urls
     page_title = None  # what shows up in the <title>
-    template_name = 'style/bootstrap2/base_page.html'
+    template_name = ''
 
     @property
     def page_name(self):
@@ -158,7 +152,7 @@ class ChiefReleases(View):
 
     def get(self, request, *args, **kwargs):
         releases = get_releases(ENVIRONMENTS)
-        return JsonResponse(releases)
+        return JsonResponse(releases, safe=False)
 
 
 class ChiefSubmodules(View):
@@ -179,6 +173,7 @@ class ChiefPrepare(View):
     urlname = 'chief_prepare'
 
     def post(self, request, *args, **kwargs):
+        print 'aaafsafasfasfas'
         env = request.POST.get('env')
         update_chief_code(env)
         if env == 'staging':

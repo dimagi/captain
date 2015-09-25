@@ -23,13 +23,14 @@ def get_uncommitted_submodules(env):
     # getattr(fabfile, env)()
     # submodules = execute(chief.chief_uncommitted_submodules)
     # return list(itertools.chain(*submodules.values()))
-    pass
+    return []
 
 
 def commit_submodules(env, submodules):
     """
     Given a list of uncommitted submodules, commit those submodules to master
     """
+    pass
 
 
 def build_staging(env):
@@ -59,7 +60,7 @@ def get_machines(env):
     # fabfile.load_env(env)
     # getattr(fabfile, env)()
     # return list(set([host for role in fabfile.env['roledefs'].values() for host in role]))
-    pass
+    return []
 
 
 def get_releases(envs):
@@ -71,4 +72,4 @@ def get_releases(envs):
     #     release_hash = execute(fabfile.get_releases, 3)
     #     releases[env] = sorted(list(set(itertools.chain(*release_hash.values()))), reverse=True)
     # return releases
-    pass
+    return []

@@ -1,5 +1,6 @@
-{% extends "hqadmin/hqadmin_base_report.html" %}
-{% load hq_shared_tags %}
+{% extends "chief/base.html" %}
+{% load staticfiles %}
+
 
 {% block report-title %}
 HQ Chief
@@ -9,7 +10,18 @@ HQ Chief
 <script src="{% static 'chief/js/chief.js' %}"></script>
 {% endblock %}
 
-{% block reportcontent %}
+{% block js-inline %}{{ block.super }}
+<script type="text/javascript">
+    window.Chief.ReleasesUrl ='{% url 'chief_releases' %}';
+    window.Chief.SubmodulesUrl = '{% url 'chief_submodules' %}';
+    window.Chief.PrepareUrl = '{% url 'chief_prepare' %}';
+
+    ko.applyBindings(new Chief.ViewModels.InitiateDeploy(), $('#deploy-modal')[0]);
+    ko.applyBindings(new Chief.ViewModels.PreviousReleases(), $('#previous-releases')[0]);
+</script>
+{% endblock %}
+
+{% block content %}
 <div>
 <img src="{% static 'chief/img/hq_chief.png' %}" width="300" alt="chief logo" height="70" />
 </div>
@@ -17,7 +29,9 @@ HQ Chief
 
 <h3>Current Deploy</h3>
 <p>No deploy currently</p>
-<a data-toggle="modal" href="#deploy-modal" class="btn">Deploy</a>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deploy-modal">
+  Deploy
+</button>
 
 
 <h3>Previous Releases</h3>
@@ -50,49 +64,52 @@ HQ Chief
 {% endblock %}
 {% block modals %}{{ block.super }}
 <!-- deploy modal -->
-<div id="deploy-modal" class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Let's do this</h3>
-    </div>
-    <div class="modal-body">
-        <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'chief_deploy' %}>
-            <div class="control-group">
-                <label class="control-label">Deploy environment</label>
-                <div class="controls">
-                    {% for env in environments %}
-                    <label class="radio">
-                        <input
-                            type="radio"
-                            name="env"
-                            data-bind="checked: env"
-                            value="{{ env }}">
-                        {{ env }}
-                    </label>
-                    {% endfor %}
-                </div>
+<div class="modal fade" id="deploy-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Let's do this</h4>
             </div>
-            <div class="control-group" data-bind="visible: !submodules().length">
-                <label class="control-label">No submodules to commit</label>
+            <div class="modal-body">
+                <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'chief_deploy' %}>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Deploy environment</label>
+                        <div class="col-sm-8">
+                            {% for env in environments %}
+                            <label class="radio">
+                                <input
+                                    type="radio"
+                                    name="env"
+                                    data-bind="checked: env"
+                                    value="{{ env }}">
+                                {{ env }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group" data-bind="visible: !submodules().length">
+                        <label class="col-sm-4 control-label">No submodules to commit</label>
+                    </div>
+                    <div class="form-group" data-bind="visible: submodules().length">
+                        <label class="col-sm-4 control-label">Uncommitted Submodules</label>
+                        <div class="col-sm-8" data-bind="foreach: submodules">
+                            <label class="radio">
+                                <input type="checkbox" name="submodules" data-bind="
+                                    value: $data,
+                                    checked: $parent.submodulesToCommit
+                                    ">
+                                <span data-bind="text: $data"></span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="control-group" data-bind="visible: submodules().length">
-                <label class="control-label">Uncommitted Submodules</label>
-                <div class="controls" data-bind="foreach: submodules">
-                    <label class="radio">
-                        <input type="checkbox" name="submodules" data-bind="
-                            value: $data,
-                            checked: $parent.submodulesToCommit
-                            ">
-                        <span data-bind="text: $data"></span>
-                    </label>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bind="click: initiateDeploy">Initiate Deploy</button>
             </div>
-
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a data-dismiss="modal" class="btn">Close</a>
-        <a class="btn btn-primary" data-bind="click: initiateDeploy">Initiate Deploy</a>
+        </div>
     </div>
 </div>
 {% endblock %}
