@@ -19,7 +19,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
-    'apps.deploy'
+    'apps.deploy.app_config.HqDeploy'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,6 +125,8 @@ LOGGING = {
         }
     }
 }
+
+from chief_settings import *
 
 try:
     from localsettings import *
