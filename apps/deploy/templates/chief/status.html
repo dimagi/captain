@@ -12,9 +12,12 @@ HQ Chief
 
 {% block js-inline %}{{ block.super }}
 <script type="text/javascript">
-    window.Chief.ReleasesUrl ='{% url 'chief_releases' %}';
-    window.Chief.SubmodulesUrl = '{% url 'chief_submodules' %}';
-    window.Chief.PrepareUrl = '{% url 'chief_prepare' %}';
+    window.Chief.config = {
+        releasesUrl: '{% url 'chief_releases' %}',
+        submodulesUrl: '{% url 'chief_submodules' %}',
+        prepareUrl: '{% url 'chief_prepare' %}',
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+    };
 
     ko.applyBindings(new Chief.ViewModels.InitiateDeploy(), $('#deploy-modal')[0]);
     ko.applyBindings(new Chief.ViewModels.PreviousReleases(), $('#previous-releases')[0]);
@@ -73,6 +76,7 @@ HQ Chief
             </div>
             <div class="modal-body">
                 <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'chief_deploy' %}>
+                    {% csrf_token %}
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Deploy environment</label>
                         <div class="col-sm-8">
