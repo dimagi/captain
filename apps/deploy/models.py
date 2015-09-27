@@ -1,7 +1,7 @@
 from django.db import models
 
 from .exceptions import DeployAlreadyInProgress
-from .utils import get_machines, trigger_chief_deploy
+# from .utils import get_machines, trigger_chief_deploy
 
 
 class Deploy(models.Model):

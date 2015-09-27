@@ -9,9 +9,13 @@
         var self = this;
         self.env = ko.observable(null);
         self.env.subscribe(function(newEnv) {
-            $.post(Chief.PrepareUrl, { env: newEnv }).done(function(response) {
+            var data = {
+                env: newEnv,
+                csrfmiddlewaretoken: Chief.config.csrfmiddlewaretoken
+            };
+            $.post(Chief.config.prepareUrl, data).done(function(response) {
                 console.log(response);
-                return $.get(Chief.SubmodulesUrl, { env: newEnv }).done(function(response) {
+                return $.get(Chief.config.submodulesUrl, { env: newEnv }).done(function(response) {
                     console.log(response);
                     self.submodules(response.submodules);
                 });
@@ -33,7 +37,7 @@
     };
     Chief.ViewModels.PreviousReleases.prototype.init = function() {
         var self = this;
-        $.get(Chief.ReleasesUrl).done(function(response) {
+        $.get(Chief.config.releasesUrl).done(function(response) {
             console.log(response);
             self.environments(_.keys(response));
             _.each(response, function(releases, env) {

@@ -1,6 +1,7 @@
 import itertools
 
-# from fab import chief, fabfile
+from fab import fabfile
+from chief_fab import chief
 from fabric.api import execute
 
 
@@ -12,7 +13,7 @@ def update_chief_code(env):
     # fabfile.load_env(env)
     # getattr(fabfile, env)()
     # execute(chief.update_chief_code)
-    pass
+    print('pretending to update chief code')
 
 def get_uncommitted_submodules(env):
     """

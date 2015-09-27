@@ -173,7 +173,6 @@ class ChiefPrepare(View):
     urlname = 'chief_prepare'
 
     def post(self, request, *args, **kwargs):
-        print 'aaafsafasfasfas'
         env = request.POST.get('env')
         update_chief_code(env)
         if env == 'staging':
