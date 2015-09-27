@@ -1,6 +1,7 @@
 import itertools
 
-# from fab import chief, fabfile
+from fab import fabfile
+from chief_fab import chief
 from fabric.api import execute
 
 
