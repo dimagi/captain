@@ -8,6 +8,13 @@
     Chief.ViewModels.InitiateDeploy = function() {
         var self = this;
         self.env = ko.observable(null);
+
+        $('#deploy-modal').on('show.bs.modal', function(e) {
+            var $btn = $(e.relatedTarget);
+            console.log($btn.data('environment'))
+            self.env($btn.data('environment'));
+        });
+
         self.env.subscribe(function(newEnv) {
             var data = {
                 env: newEnv,
@@ -37,14 +44,14 @@
     };
     Chief.ViewModels.PreviousReleases.prototype.init = function() {
         var self = this;
-        $.get(Chief.config.releasesUrl).done(function(response) {
-            console.log(response);
-            self.environments(_.keys(response));
-            _.each(response, function(releases, env) {
-                response[env] = _.map(releases, self.parseRelease);
-            });
-            self.releases(response);
-        });
+        //$.get(Chief.config.releasesUrl).done(function(response) {
+        //    console.log(response);
+        //    self.environments(_.keys(response));
+        //    _.each(response, function(releases, env) {
+        //        response[env] = _.map(releases, self.parseRelease);
+        //    });
+        //    self.releases(response);
+        //});
     };
     Chief.ViewModels.PreviousReleases.prototype.parseRelease = function(release) {
         var dateParts = _.last(release.split('/')).split('_');

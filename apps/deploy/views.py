@@ -13,7 +13,7 @@ from .utils import (
     get_releases,
 )
 
-ENVIRONMENTS = ['staging', 'production', 'india']
+ENVIRONMENTS = ['staging', 'production']
 
 
 class ChiefDeploy(View):
@@ -31,12 +31,11 @@ class ChiefDeploy(View):
             commit_submodules(env, submodules)
 
         deploy = Deploy.objects.create(env=env)
-        #try:
-        #    deploy = Deploy.create(env)
-        #except DeployAlreadyInProgress:
-        #    return HttpResponseBadRequest('There is already a deploy in progress')
+        try:
+            deploy.deploy()
+        except DeployAlreadyInProgress:
+            return HttpResponseBadRequest('There is already a deploy in progress')
 
-        #deploy.deploy()
 
         return HttpResponse('Deploy has been triggered')
 
@@ -175,9 +174,9 @@ class ChiefPrepare(View):
     def post(self, request, *args, **kwargs):
         env = request.POST.get('env')
         update_chief_code(env)
-        if env == 'staging':
-            try:
-                build_staging(env)
-            except Exception:
-                JsonResponse({'status': 'fail', 'reason': 'Failed to rebuild staging'}, status_code=500)
+        #if env == 'staging':
+        #    try:
+        #        build_staging(env)
+        #    except Exception:
+        #        JsonResponse({'status': 'fail', 'reason': 'Failed to rebuild staging'}, status_code=500)
         return JsonResponse({'status': 'ok'})

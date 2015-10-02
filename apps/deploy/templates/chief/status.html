@@ -16,7 +16,7 @@ HQ Chief
         releasesUrl: '{% url 'chief_releases' %}',
         submodulesUrl: '{% url 'chief_submodules' %}',
         prepareUrl: '{% url 'chief_prepare' %}',
-        csrfmiddlewaretoken: '{{ csrf_token }}'
+        csrfmiddlewaretoken: '{{ csrf_token }}',
     };
 
     ko.applyBindings(new Chief.ViewModels.InitiateDeploy(), $('#deploy-modal')[0]);
@@ -26,15 +26,25 @@ HQ Chief
 
 {% block content %}
 <div>
-<img src="{% static 'chief/img/hq_chief.png' %}" width="300" alt="chief logo" height="70" />
+    <img src="{% static 'chief/img/hq_chief.png' %}" width="300" alt="chief logo" />
 </div>
 <hr />
 
 <h3>Current Deploy</h3>
 <p>No deploy currently</p>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deploy-modal">
-  Deploy
-</button>
+<div id="deploys" data-bind="foreach { data: environment }">
+    {% for env in environments %}
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-environment="{{ env }}"
+      data-toggle="modal"
+      data-target="#deploy-modal">
+        Deploy {{ env }}
+    </button>
+
+    {% endfor %}
+</div>
 
 
 <h3>Previous Releases</h3>
@@ -77,23 +87,9 @@ HQ Chief
             <div class="modal-body">
                 <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'chief_deploy' %}>
                     {% csrf_token %}
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Deploy environment</label>
-                        <div class="col-sm-8">
-                            {% for env in environments %}
-                            <label class="radio">
-                                <input
-                                    type="radio"
-                                    name="env"
-                                    data-bind="checked: env"
-                                    value="{{ env }}">
-                                {{ env }}
-                            </label>
-                            {% endfor %}
-                        </div>
-                    </div>
+                    <input type="hidden" name="env" data-bind="value: env" />
                     <div class="form-group" data-bind="visible: !submodules().length">
-                        <label class="col-sm-4 control-label">No submodules to commit</label>
+                        <label class="col-sm-4 control-label">Fetching submodules...</label>
                     </div>
                     <div class="form-group" data-bind="visible: submodules().length">
                         <label class="col-sm-4 control-label">Uncommitted Submodules</label>

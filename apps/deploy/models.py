@@ -1,7 +1,7 @@
 from django.db import models
 
 from .exceptions import DeployAlreadyInProgress
-# from .utils import get_machines, trigger_chief_deploy
+from .utils import trigger_chief_deploy
 
 
 class Deploy(models.Model):
@@ -42,7 +42,7 @@ class Deploy(models.Model):
 
         self.in_progress = True
         self.save()
-        #trigger_chief_deploy()
+        trigger_chief_deploy(self.env)
 
     def as_json(self):
         return {

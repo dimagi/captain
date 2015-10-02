@@ -9,22 +9,21 @@ def update_chief_code(env):
     """
     Remotely updates the Chief's code base
     """
-    # fabfile.clear_code_branch()
-    # fabfile.load_env(env)
-    # getattr(fabfile, env)()
-    # execute(chief.update_chief_code)
-    print('pretending to update chief code')
+    fabfile.clear_code_branch()
+    fabfile.load_env(env)
+    getattr(fabfile, env)()
+    execute(chief.update_chief_code)
+
 
 def get_uncommitted_submodules(env):
     """
     Gets a list of Chief's uncommitted submodules
     """
-    # fabfile.clear_code_branch()
-    # fabfile.load_env(env)
-    # getattr(fabfile, env)()
-    # submodules = execute(chief.chief_uncommitted_submodules)
-    # return list(itertools.chain(*submodules.values()))
-    return []
+    fabfile.clear_code_branch()
+    fabfile.load_env(env)
+    getattr(fabfile, env)()
+    submodules = execute(chief.chief_uncommitted_submodules)
+    return list(itertools.chain(*submodules.values()))
 
 
 def commit_submodules(env, submodules):
@@ -46,11 +45,10 @@ def trigger_chief_deploy(env):
     """
     Triggers Chief to kick off a deploy
     """
-    # fabfile.clear_code_branch()
-    # fabfile.load_env(env)
-    # getattr(fabfile, env)()
-    # execute(chief.chief_deploy, env)
-    pass
+    fabfile.clear_code_branch()
+    fabfile.load_env(env)
+    getattr(fabfile, env)()
+    execute(chief.chief_deploy, env)
 
 
 def get_machines(env):
@@ -65,12 +63,11 @@ def get_machines(env):
 
 
 def get_releases(envs):
-    # releases = {}
-    # for env in envs:
-    #     fabfile.clear_code_branch()
-    #     fabfile.load_env(env)
-    #     getattr(fabfile, env)()
-    #     release_hash = execute(fabfile.get_releases, 3)
-    #     releases[env] = sorted(list(set(itertools.chain(*release_hash.values()))), reverse=True)
-    # return releases
-    return []
+    releases = {}
+    for env in envs:
+        fabfile.clear_code_branch()
+        fabfile.load_env(env)
+        getattr(fabfile, env)()
+        release_hash = execute(fabfile.get_releases, 3)
+        releases[env] = sorted(list(set(itertools.chain(*release_hash.values()))), reverse=True)
+    return releases
