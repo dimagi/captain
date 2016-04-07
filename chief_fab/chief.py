@@ -1,6 +1,6 @@
 import sys
 
-from fabric.api import task, env, roles, sudo, settings
+from fabric.api import task, env, roles, sudo, settings, run
 from fabric.context_managers import cd
 
 from fab.fabfile import load_env, ROLES_CHIEF, _require_target, _pull_latest
@@ -18,7 +18,8 @@ def chief_deploy(environment):
     with cd(env.chief_dir):
         if environment == 'staging':
             sudo('git checkout autostaging')
-        sudo('source python_env/bin/activate && fab {} awesome_deploy:confirm=no'.format(environment))
+        with settings(sudo_user='cchq'):
+            sudo('echo `whoami` && source python_env/bin/activate && fab {} awesome_deploy:confirm=no --show=debug'.format(environment))
 
 
 @task
