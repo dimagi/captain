@@ -2,6 +2,7 @@ from django.db import models
 
 from .exceptions import DeployAlreadyInProgress
 from .utils import captain_deploy
+from .const import ENVIRONMENTS
 
 
 class Deploy(models.Model):
@@ -16,21 +17,15 @@ class Deploy(models.Model):
     env = models.CharField(max_length=255)
 
     @classmethod
-    def current_deploy(cls, env):
-        try:
-            return Deploy.objects.get(in_progress=True, env=env)
-        except Deploy.MultipleObjectsReturned:
-            raise DeployAlreadyInProgress
-        except Exception:
-            return None
+    def current_deploys_for_env(cls, env):
+        return Deploy.objects.filter(in_progress=True, env=env)
 
     @classmethod
     def current_deploys(cls):
-        from .views import ENVIRONMENTS
-        deploys = []
+        deploys = {}
         for env in ENVIRONMENTS:
-            deploys.append(Deploy.current_deploy(env))
-        return filter(None, deploys)
+            deploys[env] = cls.current_deploys_for_env(env)
+        return deploys
 
     def deploy(self):
         deploys_in_progress = Deploy.objects.filter(

@@ -5,8 +5,7 @@ from django.views.generic import View, TemplateView
 
 from .models import Deploy
 from .exceptions import DeployAlreadyInProgress
-
-ENVIRONMENTS = ['staging', 'production', 'zambia', 'swiss']
+from .const import ENVIRONMENTS
 
 
 class ChiefDeploy(View):
@@ -30,8 +29,12 @@ class ChiefDeploy(View):
         """
         Returns a JSON representation of the current deploy status
         """
-        deploy = Deploy.current_deploy()
-        return JsonResponse(deploy.as_json())
+        env = request.GET.get('env')
+        context = {'deploys': []}
+
+        deploys = Deploy.current_deploys_for_env(env)
+        context['deploys'][env] = map(lambda d: d.as_json(), deploys)
+        return JsonResponse(context)
 
 
 class BasePageView(TemplateView):

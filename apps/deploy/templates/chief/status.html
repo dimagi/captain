@@ -27,19 +27,34 @@ HQ Chief
 </div>
 <hr />
 
-<h3>Current Deploy</h3>
-<p>No deploy currently</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Environment</td>
+            <td>Deploys in progress</td>
+        </tr>
+    </thead>
+{% for env, deploy_list in deploys.items %}
+    <tr>
+        <td>{{ env }}</td>
+        <td>{{ deploy_list|length }}</td>
+    </tr>
+{% endfor %}
+</table>
 <div id="deploys" data-bind="foreach { data: environment }">
-    {% for env in environments %}
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-environment="{{ env }}"
-      data-toggle="modal"
-      data-target="#deploy-modal">
-        Deploy {{ env }}
-    </button>
-
+    <form>
+      {% for env in environments %}
+      <div class="form-group">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-environment="{{ env }}"
+          data-toggle="modal"
+          data-target="#deploy-modal">
+            Deploy {{ env }}
+        </button>
+      </div>
+    </form>
     {% endfor %}
 </div>
 
