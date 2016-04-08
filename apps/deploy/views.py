@@ -34,20 +34,6 @@ class ChiefDeploy(View):
         return JsonResponse(deploy.as_json())
 
 
-class ChiefDeployHook(View):
-    urlname = 'chief_deploy_hook'
-
-    def post(self, request, *args, **kwargs):
-        machine = request.POST.get('machine')
-        stage = request.POST.get('stage')
-        env = request.POST.get('env')
-        deploy = Deploy.current_deploy(env)
-
-        deploy.add_stage(stage, machine)
-
-        return HttpResponse('Successfully added stage')
-
-
 class BasePageView(TemplateView):
     urlname = None  # name of the view used in urls
     page_title = None  # what shows up in the <title>
