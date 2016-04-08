@@ -6,7 +6,7 @@ from django.views.generic import View, TemplateView
 from .models import Deploy
 from .exceptions import DeployAlreadyInProgress
 
-ENVIRONMENTS = ['staging', 'production']
+ENVIRONMENTS = ['staging', 'production', 'zambia', 'swiss']
 
 
 class ChiefDeploy(View):
