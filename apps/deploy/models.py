@@ -1,7 +1,8 @@
 from django.db import models
+from apps.deploy.tasks import captain_deploy
+from django_rq import enqueue
 
 from .exceptions import DeployAlreadyInProgress
-from .utils import captain_deploy
 from .const import ENVIRONMENTS
 
 
@@ -37,7 +38,7 @@ class Deploy(models.Model):
 
         self.in_progress = True
         self.save()
-        captain_deploy(self.env)
+        enqueue(captain_deploy, self)
 
     def as_json(self):
         return {

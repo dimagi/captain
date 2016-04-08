@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.views.generic import View, TemplateView
@@ -23,7 +23,7 @@ class ChiefDeploy(View):
         except DeployAlreadyInProgress:
             return HttpResponseBadRequest('There is already a deploy in progress')
 
-        return HttpResponse('Deploy has been triggered')
+        return HttpResponseRedirect(reverse(ChiefStatusPage.urlname))
 
     def get(self, request, *args, **kwargs):
         """
