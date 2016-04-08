@@ -1,17 +1,18 @@
 import os
 
-import sh
-from django.conf import settings
-from celery.task import task
+from fabric.network import disconnect_all
+from fabric.api import execute
+
+# HQ's fabfile
+from fab import fabfile
 
 
-@task
 def captain_deploy(env):
-    # Update local HQ
-    sh.git('-C', settings.HQ_SOURCE_ROOT, 'pull')
-
-    with cd(settings.HQ_SOURCE_ROOT):
-        sh.fab(env, 'setup_release')
+    execute(getattr(fabfile, env))
+    try:
+        execute(fabfile.setup_release)
+    finally:
+        disconnect_all()
 
 
 class cd:

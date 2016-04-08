@@ -20,7 +20,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djangobower',
     'djcelery',
-    'apps.deploy.app_config.HqDeploy',
+    'apps.deploy',
+    'django_rq',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,6 +55,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chief.wsgi.application'
 
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    },
+}
 
 DATABASES = {
     'default': {
