@@ -13,9 +13,6 @@ HQ Chief
 {% block js-inline %}{{ block.super }}
 <script type="text/javascript">
     window.Chief.config = {
-        releasesUrl: '{% url 'chief_releases' %}',
-        submodulesUrl: '{% url 'chief_submodules' %}',
-        prepareUrl: '{% url 'chief_prepare' %}',
         csrfmiddlewaretoken: '{{ csrf_token }}',
     };
 
@@ -88,21 +85,6 @@ HQ Chief
                 <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'chief_deploy' %}>
                     {% csrf_token %}
                     <input type="hidden" name="env" data-bind="value: env" />
-                    <div class="form-group" data-bind="visible: !submodules().length">
-                        <label class="col-sm-4 control-label">Fetching submodules...</label>
-                    </div>
-                    <div class="form-group" data-bind="visible: submodules().length">
-                        <label class="col-sm-4 control-label">Uncommitted Submodules</label>
-                        <div class="col-sm-8" data-bind="foreach: submodules">
-                            <label class="radio">
-                                <input type="checkbox" name="submodules" data-bind="
-                                    value: $data,
-                                    checked: $parent.submodulesToCommit
-                                    ">
-                                <span data-bind="text: $data"></span>
-                            </label>
-                        </div>
-                    </div>
                 </form>
             </div>
             <div class="modal-footer">

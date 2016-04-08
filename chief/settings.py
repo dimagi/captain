@@ -19,7 +19,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
-    'apps.deploy.app_config.HqDeploy'
+    'djcelery',
+    'apps.deploy.app_config.HqDeploy',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,6 +77,8 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+BROKER_URL = 'redis://localhost:6379/0'
 
 PROJECT_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ".."),

@@ -5,13 +5,6 @@ from django.views.generic import View, TemplateView
 
 from .models import Deploy
 from .exceptions import DeployAlreadyInProgress
-from .utils import (
-    get_uncommitted_submodules,
-    commit_submodules,
-    update_chief_code,
-    build_staging,
-    get_releases,
-)
 
 ENVIRONMENTS = ['staging', 'production']
 
@@ -21,21 +14,15 @@ class ChiefDeploy(View):
 
     def post(self, request, *args, **kwargs):
         """
-        Initiates a new deploy by first committing submodules and pushing to master and then trigger the
-        actual awesome_deploy
+        Initiates a new deploy by actual awesome_deploy
         """
         env = request.POST.get('env')
-
-        if env != 'staging':
-            submodules = request.POST.get('submodules', [])
-            commit_submodules(env, submodules)
 
         deploy = Deploy.objects.create(env=env)
         try:
             deploy.deploy()
         except DeployAlreadyInProgress:
             return HttpResponseBadRequest('There is already a deploy in progress')
-
 
         return HttpResponse('Deploy has been triggered')
 
@@ -144,39 +131,3 @@ class ChiefStatusPage(BasePageView):
             'deploys': Deploy.current_deploys()
         })
         return context
-
-
-class ChiefReleases(View):
-    urlname = 'chief_releases'
-
-    def get(self, request, *args, **kwargs):
-        releases = get_releases(ENVIRONMENTS)
-        return JsonResponse(releases, safe=False)
-
-
-class ChiefSubmodules(View):
-    urlname = 'chief_submodules'
-
-    def get(self, request, *args, **kwargs):
-        env = request.GET.get('env')
-        submodules = get_uncommitted_submodules(env)
-        return JsonResponse({'submodules': submodules})
-
-    def post(self, request, *args, **kwargs):
-        """
-        Commits submodules and pushes them to master
-        """
-
-
-class ChiefPrepare(View):
-    urlname = 'chief_prepare'
-
-    def post(self, request, *args, **kwargs):
-        env = request.POST.get('env')
-        update_chief_code(env)
-        #if env == 'staging':
-        #    try:
-        #        build_staging(env)
-        #    except Exception:
-        #        JsonResponse({'status': 'fail', 'reason': 'Failed to rebuild staging'}, status_code=500)
-        return JsonResponse({'status': 'ok'})

@@ -15,21 +15,6 @@
             self.env($btn.data('environment'));
         });
 
-        self.env.subscribe(function(newEnv) {
-            var data = {
-                env: newEnv,
-                csrfmiddlewaretoken: Chief.config.csrfmiddlewaretoken
-            };
-            $.post(Chief.config.prepareUrl, data).done(function(response) {
-                console.log(response);
-                return $.get(Chief.config.submodulesUrl, { env: newEnv }).done(function(response) {
-                    console.log(response);
-                    self.submodules(response.submodules);
-                });
-            })
-        });
-        self.submodules = ko.observableArray([]);
-        self.submoduleToCommit = ko.observableArray([]);
         self.initiateDeploy = function() {
             $('#deploy-form').submit();
         };
