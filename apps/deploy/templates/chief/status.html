@@ -2,10 +2,6 @@
 {% load staticfiles %}
 
 
-{% block report-title %}
-HQ Chief
-{% endblock %}
-
 {% block js %}{{ block.super }}
 <script src="{% static 'chief/js/chief.js' %}"></script>
 {% endblock %}
@@ -22,9 +18,7 @@ HQ Chief
 {% endblock %}
 
 {% block content %}
-<div>
-    <img src="{% static 'chief/img/hq_chief.png' %}" width="300" alt="chief logo" />
-</div>
+<h1>Captain</h1>
 <hr />
 
 <table class="table table-striped">
