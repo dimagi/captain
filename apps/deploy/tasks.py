@@ -1,3 +1,5 @@
+import logging
+
 from fabric.network import disconnect_all
 from fabric.api import execute
 
@@ -9,7 +11,8 @@ def captain_deploy(deploy):
     try:
         execute(getattr(fabfile, deploy.env))
         execute(fabfile.setup_release)
-    except Exception:
+    except Exception, e:
+        logging.exception(e)
         deploy.success = False
     else:
         deploy.success = True
