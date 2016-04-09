@@ -1,7 +1,12 @@
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import View, TemplateView
+from mtfileutil.reverse import tail
+from pygments import highlight
+from pygments.lexers import TextLexer
+from pygments.formatters import HtmlFormatter
 
 from .models import Deploy
 from .exceptions import DeployAlreadyInProgress
@@ -35,6 +40,26 @@ class ChiefDeploy(View):
         deploys = Deploy.current_deploys_for_env(env)
         context['deploys'][env] = map(lambda d: d.as_json(), deploys)
         return JsonResponse(context)
+
+
+class LogFileView(View):
+    urlname = 'deploy_log_file'
+
+    def get(self, request, *args, **kwargs):
+        lines = tail(settings.RQ_LOG_FILE, 100)
+        formatted_lines = highlight(
+            '\n'.join(lines),
+            TextLexer(),
+            HtmlFormatter(
+                linenos=True,
+                noclasses=True,
+            )
+        )
+
+        return JsonResponse({
+            'lines': lines,
+            'formatted_lines': formatted_lines,
+        })
 
 
 class BasePageView(TemplateView):
