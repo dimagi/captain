@@ -58,3 +58,4 @@ target/
 .idea
 localsettings.py
 bower_components
+static
