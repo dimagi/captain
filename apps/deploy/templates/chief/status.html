@@ -68,34 +68,6 @@
     {% endfor %}
 </div>
 
-
-<h3>Previous Releases</h3>
-<div data-bind="foreach: { data: environments, as: 'environment' }" id="previous-releases">
-    <div class="previous-release-table">
-        <h5 data-bind="text: environment"></h5>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Path</th>
-                    <th>Rollback</th>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: $root.releases()[environment]">
-                <tr>
-                    <td data-bind="text: $data.date"></td>
-                    <td data-bind="text: $data.path"></td>
-                    <!-- ko if: $index() === 0 -->
-                    <td>Current Release</td>
-                    <!-- /ko -->
-                    <!-- ko if: $index() > 0 -->
-                    <td><a>Rollback</a></td>
-                    <!-- /ko -->
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 {% endblock %}
 {% block modals %}{{ block.super }}
 <!-- deploy modal -->
