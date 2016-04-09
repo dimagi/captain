@@ -36,6 +36,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'chief.urls'
+FILEPATH = os.path.abspath(os.path.dirname(__file__))
+DJANGO_LOG_FILE = "%s/%s" % (FILEPATH, "captain.django.log")
 
 TEMPLATES = [
     {
@@ -123,7 +125,15 @@ LOGGING = {
             'level': 'NOTSET',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
-        }
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': DJANGO_LOG_FILE,
+            'maxBytes': 10 * 1024 * 1024,  # 10 MB
+            'backupCount': 20  # Backup 200 MB of logs
+        },
     },
     'loggers': {
         '': {
@@ -134,7 +144,11 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
             'level': 'ERROR'
-        }
+        },
+        "rq.worker": {
+            "handlers": ['console', "file"],
+            "level": "DEBUG"
+        },
     }
 }
 
