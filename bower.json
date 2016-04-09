@@ -1,0 +1,11 @@
+{
+  "name": "HQ Captain",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "1.11.1",
+    "underscore": "1.6.0",
+    "bootstrap": "3.3.5",
+    "knockout": "3.3.0"
+  },
+  "private": true
+}

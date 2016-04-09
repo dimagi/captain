@@ -18,7 +18,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djangobower',
     'djcelery',
     'apps.deploy',
     'django_rq',
@@ -37,7 +36,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'chief.urls'
 FILEPATH = os.path.abspath(os.path.dirname(__file__))
-DJANGO_LOG_FILE = "%s/%s" % (FILEPATH, "captain.django.log")
 
 TEMPLATES = [
     {
@@ -95,21 +93,19 @@ PROJECT_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ".."),
 )
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+DJANGO_LOG_FILE = "%s/%s" % (PROJECT_ROOT, "captain.django.log")
 
-BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'components')
+BOWER_COMPONENTS = os.path.join(PROJECT_ROOT, 'bower_components')
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'djangobower.finders.BowerFinder',
 )
 
-BOWER_INSTALLED_APPS = (
-    'jquery#1.11.1',
-    'underscore#1.6.0',
-    'bootstrap#3.3.5',
-    'knockout#3.3.0',
+STATICFILES_DIRS = (
+    BOWER_COMPONENTS,
 )
 
 LOGGING = {
