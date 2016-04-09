@@ -66,12 +66,8 @@ RQ_QUEUES = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'chief',
-        'USER': 'chief',
-        'PASSWORD': 'chief',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/path/to/dbfile',
     }
 }
 
