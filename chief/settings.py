@@ -140,7 +140,7 @@ LOGGING = {
         },
         "rq.worker": {
             "handlers": ['console', "file"],
-            "level": "DEBUG"
+            "level": "INFO"
         },
     }
 }
