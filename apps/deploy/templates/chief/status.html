@@ -15,7 +15,6 @@
 
     ko.applyBindings(new Chief.ViewModels.InitiateDeploy(), $('#deploy-modal')[0]);
     ko.applyBindings(new Chief.ViewModels.LogFile(), $('#log-file-modal')[0]);
-    ko.applyBindings(new Chief.ViewModels.PreviousReleases(), $('#previous-releases')[0]);
 </script>
 {% endblock %}
 
@@ -57,7 +56,6 @@
       <div class="form-group">
         <button
           type="button"
-          class="btn btn-primary"
           data-environment="{{ env }}"
           data-toggle="modal"
           data-target="#deploy-modal">
