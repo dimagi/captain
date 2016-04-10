@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/dimagi/captain/master/apps/deploy/static/chief/img/captain.png" width="300"/>
+<img src="https://raw.githubusercontent.com/dimagi/captain/master/apps/deploy/static/chief/img/captain.png" width="300"/>
 
 ## Setup
 
