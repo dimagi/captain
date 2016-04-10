@@ -3,7 +3,6 @@ from fabric.colors import red, white, green
 
 # the user to use for the remote commands
 env.sudo_user = 'cchq'
-env.user = 'brudolph'
 # the servers where the commands are executed
 env.hosts = ['hqcaptain0.internal.commcarehq.org']
 env.code_root = '/home/cchq/captain/src'
