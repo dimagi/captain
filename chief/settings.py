@@ -68,7 +68,7 @@ RQ_QUEUES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/path/to/dbfile',
+        'NAME': 'captain.db',
     }
 }
 

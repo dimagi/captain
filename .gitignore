@@ -59,3 +59,4 @@ target/
 localsettings.py
 bower_components
 static
+captain.db
