@@ -10,7 +10,7 @@ from fab import fabfile
 def captain_deploy(deploy):
     try:
         execute(getattr(fabfile, deploy.env))
-        execute(fabfile.setup_release)
+        execute(fabfile.awesome_deploy, confirm='no')
     except Exception, e:
         logging.exception(e)
         deploy.success = False
