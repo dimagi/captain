@@ -21,8 +21,12 @@ class ChiefDeploy(View):
         Initiates a new deploy by actual awesome_deploy
         """
         env = request.POST.get('env')
+        code_branch = request.POST.get('code_branch')
 
-        deploy = Deploy.objects.create(env=env)
+        deploy = Deploy.objects.create(
+            env=env,
+            code_branch=code_branch,
+        )
         try:
             deploy.deploy()
         except DeployAlreadyInProgress:

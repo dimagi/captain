@@ -79,6 +79,16 @@
                 <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'chief_deploy' %}>
                     {% csrf_token %}
                     <input type="hidden" name="env" data-bind="value: env" />
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="env-code-branch">Branch to deploy</label>
+                        <div class="col-sm-8">
+                            <input
+                                type="text"
+                                name="code_branch"
+                                class="form-control"
+                                data-bind="value: defaultBranch()"/>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

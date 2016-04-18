@@ -16,6 +16,7 @@ class Deploy(models.Model):
     log_file = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     env = models.CharField(max_length=255)
+    code_branch = models.CharField(max_length=255)
 
     @classmethod
     def current_deploys_for_env(cls, env):

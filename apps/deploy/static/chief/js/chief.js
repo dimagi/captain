@@ -14,6 +14,13 @@
             self.env($btn.data('environment'));
         });
 
+        self.defaultBranch = function() {
+            if (self.env() === 'staging') {
+                return 'autostaging';
+            }
+            return 'master';
+        };
+
         self.initiateDeploy = function() {
             $('#deploy-form').submit();
         };
