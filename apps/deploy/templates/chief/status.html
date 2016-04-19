@@ -1,5 +1,6 @@
 {% extends "chief/base.html" %}
 {% load staticfiles %}
+{% load humanize %}
 
 
 {% block js %}{{ block.super }}
@@ -27,12 +28,22 @@
         <tr>
             <td>Environment</td>
             <td>Deploys in progress</td>
+            <td>Deploy information</td>
         </tr>
     </thead>
 {% for env, deploy_list in deploys.items %}
     <tr>
         <td>{{ env }}</td>
         <td>{{ deploy_list|length }}</td>
+        <td>
+            <ul class="list-unstyled">
+            {% for deploy in deploy_list %}
+            <li>
+            {{ deploy.user }} started deploying <code>{{ deploy.code_branch }}</code> to {{ deploy.env }} {{ deploy.date_created|naturaltime }}
+            </li>
+            {% endfor %}
+            </ul>
+        </td>
     </tr>
 {% endfor %}
 </table>
