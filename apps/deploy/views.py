@@ -22,10 +22,12 @@ class ChiefDeploy(View):
         """
         env = request.POST.get('env')
         code_branch = request.POST.get('code_branch')
+        user = request.POST.get('deploy_user')
 
         deploy = Deploy.objects.create(
             env=env,
             code_branch=code_branch,
+            user=user,
         )
         try:
             deploy.deploy()
