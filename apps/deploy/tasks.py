@@ -11,6 +11,7 @@ def captain_deploy(deploy):
     try:
         if deploy.code_branch:
             fabfile.env.code_branch = deploy.code_branch
+        fabfile.env.captain_user = deploy.user
         execute(getattr(fabfile, deploy.env))
         execute(fabfile.awesome_deploy, confirm='no')
     except Exception, e:
