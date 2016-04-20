@@ -48,26 +48,6 @@ class ChiefDeploy(View):
         return JsonResponse(context)
 
 
-class LogFileView(View):
-    urlname = 'deploy_log_file'
-
-    def get(self, request, *args, **kwargs):
-        lines = tail(settings.RQ_LOG_FILE, 100)
-        formatted_lines = highlight(
-            '\n'.join(lines),
-            TextLexer(),
-            HtmlFormatter(
-                linenos=True,
-                noclasses=True,
-            )
-        )
-
-        return JsonResponse({
-            'lines': lines,
-            'formatted_lines': formatted_lines,
-        })
-
-
 class BasePageView(TemplateView):
     urlname = None  # name of the view used in urls
     page_title = None  # what shows up in the <title>

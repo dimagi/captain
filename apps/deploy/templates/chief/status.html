@@ -11,11 +11,9 @@
 <script type="text/javascript">
     window.Chief.config = {
         csrfmiddlewaretoken: '{{ csrf_token }}',
-        logFileUrl: "{% url 'deploy_log_file' %}",
     };
 
     ko.applyBindings(new Chief.ViewModels.InitiateDeploy(), $('#deploy-modal')[0]);
-    ko.applyBindings(new Chief.ViewModels.LogFile(), $('#log-file-modal')[0]);
 </script>
 {% endblock %}
 
@@ -50,11 +48,8 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <a
-            data-toggle="modal"
-            data-target="#log-file-modal"
-            data-deploy-id="{{ deploy.id }}">
-            View log file
+        <a href="http://hqcaptain0.internal.commcarehq.org:8080/" target="_blank">
+            Tail log file
         </a>
     </div>
 </div>
@@ -122,21 +117,4 @@
     </div>
 </div>
 
-<!-- log file modal -->
-<div class="modal fade" id="log-file-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Logfile</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bind="click: refreshLogFile">Refresh</button>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
