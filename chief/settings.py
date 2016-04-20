@@ -116,7 +116,7 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'NOTSET',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
@@ -132,7 +132,7 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['console'],
-            'level': 'NOTSET',
+            'level': 'ERROR',
         },
         'django.request': {
             'handlers': ['console'],
