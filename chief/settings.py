@@ -132,7 +132,7 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['console'],
-            'level': 'ERROR',
+            'level': 'WARN',
         },
         'django.request': {
             'handlers': ['console'],
