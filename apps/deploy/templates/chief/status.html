@@ -39,7 +39,7 @@
             <ul class="list-unstyled">
             {% for deploy in deploy_list %}
             <li>
-            {{ deploy.user }} started deploying <code>{{ deploy.code_branch }}</code> to {{ deploy.env }} {{ deploy.date_created|naturaltime }}
+            {{ deploy.user }} started deploying <code>{{ deploy.code_branch }}</code> {{ deploy.date_created|naturaltime }}
             </li>
             {% endfor %}
             </ul>
