@@ -24,10 +24,28 @@ class Deploy(models.Model):
         return Deploy.objects.filter(in_progress=True, env=env)
 
     @classmethod
+    def previous_deploy_for_env(cls, env):
+        try:
+            return Deploy.objects.filter(
+                in_progress=False,
+                env=env,
+                complete=True
+            ).latest('date_created')
+        except Deploy.DoesNotExist:
+            return None
+
+    @classmethod
     def current_deploys(cls):
         deploys = {}
         for env in ENVIRONMENTS:
             deploys[env] = cls.current_deploys_for_env(env)
+        return deploys
+
+    @classmethod
+    def previous_deploys(cls):
+        deploys = {}
+        for env in ENVIRONMENTS:
+            deploys[env] = cls.previous_deploy_for_env(env)
         return deploys
 
     def deploy(self):
@@ -48,6 +66,4 @@ class Deploy(models.Model):
             'success': self.success,
             'date_created': self.date_created,
             'env': self.env,
-            'machines': [m.as_json() for m in self.machine_set.all()],
-            'stages': [s.as_json() for s in self.stage_set.all()],
         }

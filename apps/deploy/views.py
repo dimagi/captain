@@ -128,6 +128,7 @@ class ChiefStatusPage(BasePageView):
             'hide_filters': True,
             # TODO make this dynamic so india can only deploy india
             'environments': ENVIRONMENTS,
-            'deploys': Deploy.current_deploys()
+            'deploys': Deploy.current_deploys(),
+            'previous_deploys': Deploy.previous_deploys(),
         })
         return context

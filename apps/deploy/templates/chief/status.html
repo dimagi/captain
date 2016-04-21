@@ -1,6 +1,7 @@
 {% extends "chief/base.html" %}
 {% load staticfiles %}
 {% load humanize %}
+{% load deploy_tags %}
 
 
 {% block js %}{{ block.super }}
@@ -27,6 +28,7 @@
             <td>Environment</td>
             <td>Deploys in progress</td>
             <td>Deploy information</td>
+            <td>Previous deploy</td>
         </tr>
     </thead>
 {% for env, deploy_list in deploys.items %}
@@ -41,6 +43,19 @@
             </li>
             {% endfor %}
             </ul>
+        </td>
+        <td>
+            {% if previous_deploys|keyvalue:env %}
+                {% with previous_deploys|keyvalue:env as previous_deploy %}
+                {% if previous_deploy.success %}
+                <span class="label label-success">Success</span>
+                {% else %}
+                <span class="label label-danger">Failure</span>
+                {% endif %}
+                Last deployed <code>{{ previous_deploy.code_branch }}</code>
+                {{ previous_deploy.date_created|naturaltime }}.
+                {% endwith %}
+            {% endif %}
         </td>
     </tr>
 {% endfor %}
