@@ -26,6 +26,7 @@
     <thead>
         <tr>
             <td>Environment</td>
+            <td>Deploy</td>
             <td>Deploys in progress</td>
             <td>Current deploy</td>
             <td>Previous deploy</td>
@@ -34,6 +35,16 @@
 {% for env, deploy_list in deploys.items %}
     <tr>
         <td>{{ env }}</td>
+        <td>
+            <button
+              type="button"
+              class="btn btn-default"
+              data-environment="{{ env }}"
+              data-toggle="modal"
+              data-target="#deploy-modal">
+                Deploy
+            </button>
+        </td>
         <td>{{ deploy_list|length }}</td>
         <td>
             <ul class="list-unstyled">
@@ -67,23 +78,6 @@
             Tail log file
         </a>
     </div>
-</div>
-
-<div id="deploys" data-bind="foreach { data: environment }">
-    <form>
-      {% for env in environments %}
-      <div class="form-group">
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-environment="{{ env }}"
-          data-toggle="modal"
-          data-target="#deploy-modal">
-            Deploy {{ env }}
-        </button>
-      </div>
-    </form>
-    {% endfor %}
 </div>
 
 {% endblock %}
