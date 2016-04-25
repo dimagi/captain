@@ -18,6 +18,7 @@ class Deploy(models.Model):
     env = models.CharField(max_length=255)
     code_branch = models.CharField(max_length=255)
     user = models.CharField(max_length=255, default='')
+    failure_reason = models.CharField(max_length=255, null=True)
 
     @classmethod
     def current_deploys_for_env(cls, env):

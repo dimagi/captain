@@ -65,6 +65,11 @@
                 {% endif %}
                 Last deployed <code>{{ previous_deploy.code_branch }}</code>
                 {{ previous_deploy.date_created|naturaltime }}.
+                {% if previous_deploy.failure_reason %}
+                <div>
+                    <small>{{ previous_deploy.failure_reason }}</small>
+                </div>
+                {% endif %}
                 {% endwith %}
             {% endif %}
         </td>
