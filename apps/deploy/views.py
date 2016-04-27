@@ -112,7 +112,7 @@ class BasePageView(TemplateView):
 
 class ChiefStatusPage(BasePageView):
     urlname = 'chief_status_page'
-    page_title = 'HQ Chief'
+    page_title = 'Captain'
     template_name = 'chief/status.html'
 
     # @method_decorator(require_superuser)
