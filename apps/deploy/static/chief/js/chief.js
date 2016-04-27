@@ -26,4 +26,13 @@
         };
     };
 
+    $('#stacktrace-modal').on('show.bs.modal', function(e) {
+        var $btn = $(e.relatedTarget),
+            stacktrace = $btn.data('stacktrace');
+
+        $('#stacktrace-modal').find('.stacktrace').html(
+            stacktrace.replace(/(?:\r\n|\r|\n)/g, '<br />')
+        );
+    });
+
 })();

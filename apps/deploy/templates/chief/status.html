@@ -72,7 +72,15 @@
                 {% endif %}
                 {% if previous_deploy.failure_reason %}
                 <div>
-                    <small>{{ previous_deploy.failure_reason }}</small>
+                    <small>
+                        {{ previous_deploy.failure_reason }}
+                        <a
+                            data-stacktrace="{{ previous_deploy.stacktrace|default:"No stacktrace available" }}"
+                            data-toggle="modal"
+                            data-target="#stacktrace-modal">
+                            (view stacktrace)
+                        </a>
+                    </small>
                 </div>
                 {% endif %}
                 {% endwith %}
@@ -92,6 +100,26 @@
 
 {% endblock %}
 {% block modals %}{{ block.super }}
+
+<!-- stack track modal -->
+<div class="modal fade" id="stacktrace-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Stack Trace</span></h4>
+            </div>
+            <div class="modal-body">
+                <samp class="small stacktrace"></samp>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- deploy modal -->
 <div class="modal fade" id="deploy-modal">
     <div class="modal-dialog">

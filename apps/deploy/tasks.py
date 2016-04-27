@@ -1,3 +1,4 @@
+import traceback
 import logging
 from datetime import datetime
 
@@ -21,6 +22,7 @@ def captain_deploy(deploy):
         execute(fabfile.awesome_deploy, confirm='no')
     except Exception, e:
         logging.exception(e)
+        deploy.stacktrace = traceback.format_exc()
         deploy.failure_reason = unicode(e)
         deploy.success = False
     else:
