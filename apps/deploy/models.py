@@ -8,7 +8,7 @@ from .const import ENVIRONMENTS
 
 class Deploy(models.Model):
     """
-    A Deploy represents a single deploy from Chief
+    A Deploy represents a single deploy from Captain
     """
     in_progress = models.BooleanField(default=False, db_index=True)
     success = models.BooleanField(default=False, db_index=True)
