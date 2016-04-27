@@ -129,6 +129,12 @@
                 <h4 class="modal-title">Deploy <span data-bind="text: env"></span></h4>
             </div>
             <div class="modal-body">
+                <!-- ko if: env() === 'staging' -->
+                <div class="alert alert-info" role="alert">
+                    <strong>Heads up!</strong> Captain won't rebuild staging for you, you need to push the
+                    branch to <code>origin</code> first using <code>scripts/rebuildstaging</code>
+                </div>
+                <!-- /ko -->
                 <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'chief_deploy' %}>
                     {% csrf_token %}
                     <input type="hidden" name="env" data-bind="value: env" />
