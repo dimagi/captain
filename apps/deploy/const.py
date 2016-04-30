@@ -1,1 +1,1 @@
-ENVIRONMENTS = ['staging', 'production', 'zambia', 'swiss']
+ENVIRONMENTS = ['staging', 'production', 'zambia', 'swiss', 'softlayer']
