@@ -1,0 +1,40 @@
+{% extends "chief/base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Monitor for Production</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <iframe
+            src="https://app.datadoghq.com/graph/embed?token=6c0370991740d2a2a67cbc9d11692f4c2d2f0bb5622e40fcab9225c2cc885f6e&height=200&legend=true"
+            height="200"
+            frameborder="0"></iframe>
+    </div>
+    <div class="col-md-6">
+        <iframe
+            src="https://app.datadoghq.com/graph/embed?token=918642e1ac7ddf11426f188a8bddbd07d6321eaf37184eecff8c372ff75ba38c&height=200&legend=true"
+            height="200"
+            frameborder="0">
+        </iframe>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <iframe
+            src="https://app.datadoghq.com/graph/embed?token=b4427a2cdcca1809d4c2e2f1ca3b1bb43ed4d9950098ef454127a9c0b9972d0e&height=200&legend=true"
+            height="200"
+            frameborder="0"></iframe>
+    </div>
+    <div class="col-md-6">
+        <iframe
+            src="https://app.datadoghq.com/graph/embed?token=de364ac77d17aa0f9a9a9ae43daf5e5b145b57dce7b7c2420bb6876f47cdab29&height=200&legend=true"
+            height="200"
+            frameborder="0">
+        </iframe>
+    </div>
+</div>
+
+{% endblock %}

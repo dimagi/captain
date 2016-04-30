@@ -25,6 +25,10 @@ body {
   border: 0;
 }
 
+iframe {
+  width: 100%;
+}
+
 /*
  * Sidebar
  */
