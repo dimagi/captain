@@ -40,7 +40,8 @@ def migrate():
 def restart_services():
     sudo('sudo supervisorctl restart captain-django', user='cchq')
     sudo('sudo supervisorctl restart captain-rq', user='cchq')
-    sudo('sudo supervisorctl restart captain-tailon', user='cchq')
+    sudo('sudo supervisorctl restart captain-rtail', user='cchq')
+    sudo('sudo supervisorctl restart captain-rtail-server', user='cchq')
 
 
 @task
