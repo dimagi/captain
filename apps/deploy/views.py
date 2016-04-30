@@ -87,6 +87,7 @@ class BasePageView(TemplateView):
                 'title': self.page_title,
                 'url': self.page_url,
                 'parents': self.parent_pages,
+                'urlname': self.urlname,
             },
         }
 
@@ -108,6 +109,15 @@ class BasePageView(TemplateView):
         Returns a response with a template rendered with the given context.
         """
         return render(self.request, self.template_name, context)
+
+
+class MonitorPage(BasePageView):
+    urlname = 'monitor_page'
+    page_title = 'Captain Monitor'
+    template_name = 'chief/monitor.html'
+
+    def page_url(self):
+        return reverse(self.urlname)
 
 
 class ChiefStatusPage(BasePageView):
