@@ -31,7 +31,7 @@ def _set_source_root_parent(source_root_parent):
 
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chief.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "captain.settings")
 
     from django.core.management import execute_from_command_line
 

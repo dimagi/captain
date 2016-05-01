@@ -5,5 +5,5 @@ services:
   - redis-server
 install:
   - "pip install -r requirements.txt"
-  - "cp .travis/localsettings.py chief/localsettings.py"
+  - "cp .travis/localsettings.py captain/localsettings.py"
 script: "./manage.py test"

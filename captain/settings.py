@@ -36,7 +36,7 @@ MIDDLEWARE_CLASSES = (
     'whitenoise.middleware.WhiteNoiseMiddleware',
 )
 
-ROOT_URLCONF = 'chief.urls'
+ROOT_URLCONF = 'captain.urls'
 FILEPATH = os.path.abspath(os.path.dirname(__file__))
 
 TEMPLATES = [
@@ -55,7 +55,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'chief.wsgi.application'
+WSGI_APPLICATION = 'captain.wsgi.application'
 
 RQ_QUEUES = {
     'default': {
@@ -145,8 +145,6 @@ LOGGING = {
         },
     }
 }
-
-from chief_settings import *
 
 try:
     from localsettings import *
