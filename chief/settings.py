@@ -151,4 +151,4 @@ from chief_settings import *
 try:
     from localsettings import *
 except ImportError:
-   raise
+   print 'Did not find localsettings'
