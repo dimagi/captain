@@ -1,12 +1,9 @@
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import View, TemplateView
-from mtfileutil.reverse import tail
-from pygments import highlight
-from pygments.lexers import TextLexer
-from pygments.formatters import HtmlFormatter
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from .models import Deploy
 from .exceptions import DeployAlreadyInProgress
@@ -15,6 +12,10 @@ from .const import ENVIRONMENTS
 
 class ChiefDeploy(View):
     urlname = 'chief_deploy'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ChiefDeploy, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         """
