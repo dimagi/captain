@@ -1,3 +1,6 @@
+[![Build
+Status](https://travis-ci.org/dimagi/captain.svg?branch=master)](https://travis-ci.org/dimagi/captain)
+
 <img src="https://raw.githubusercontent.com/dimagi/captain/master/apps/deploy/static/chief/img/captain.png" width="300"/>
 
 ## Setup

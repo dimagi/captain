@@ -8,6 +8,7 @@ class DeployModelTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super(DeployModelTest, cls).setUpClass()
         cls.env = 'test'
 
     def test_create_deploy_model(self):
