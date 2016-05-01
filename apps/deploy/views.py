@@ -10,12 +10,12 @@ from .exceptions import DeployAlreadyInProgress
 from .const import ENVIRONMENTS
 
 
-class ChiefDeploy(View):
-    urlname = 'chief_deploy'
+class CaptainDeploy(View):
+    urlname = 'captain_deploy'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        return super(ChiefDeploy, self).dispatch(request, *args, **kwargs)
+        return super(CaptainDeploy, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         """
@@ -35,7 +35,7 @@ class ChiefDeploy(View):
         except DeployAlreadyInProgress:
             return HttpResponseBadRequest('There is already a deploy in progress')
 
-        return HttpResponseRedirect(reverse(ChiefStatusPage.urlname))
+        return HttpResponseRedirect(reverse(CaptainStatusPage.urlname))
 
     def get(self, request, *args, **kwargs):
         """
@@ -115,26 +115,26 @@ class BasePageView(TemplateView):
 class MonitorPage(BasePageView):
     urlname = 'monitor_page'
     page_title = 'Captain Monitor'
-    template_name = 'chief/monitor.html'
+    template_name = 'captain/monitor.html'
 
     def page_url(self):
         return reverse(self.urlname)
 
 
-class ChiefStatusPage(BasePageView):
-    urlname = 'chief_status_page'
+class CaptainStatusPage(BasePageView):
+    urlname = 'captain_status_page'
     page_title = 'Captain'
-    template_name = 'chief/status.html'
+    template_name = 'captain/status.html'
 
     # @method_decorator(require_superuser)
     def dispatch(self, *args, **kwargs):
-        return super(ChiefStatusPage, self).dispatch(*args, **kwargs)
+        return super(CaptainStatusPage, self).dispatch(*args, **kwargs)
 
     def page_url(self):
         return reverse(self.urlname)
 
     def get_context_data(self, **kwargs):
-        context = super(ChiefStatusPage, self).get_context_data(**kwargs)
+        context = super(CaptainStatusPage, self).get_context_data(**kwargs)
         context.update({
             'hide_filters': True,
             # TODO make this dynamic so india can only deploy india

@@ -1,25 +1,25 @@
-{% extends "chief/base.html" %}
+{% extends "captain/base.html" %}
 {% load staticfiles %}
 {% load humanize %}
 {% load deploy_tags %}
 
 
 {% block js %}{{ block.super }}
-<script src="{% static 'chief/js/chief.js' %}"></script>
+<script src="{% static 'captain/js/captain.js' %}"></script>
 {% endblock %}
 
 {% block js-inline %}{{ block.super }}
 <script type="text/javascript">
-    window.Chief.config = {
+    window.Captain.config = {
         csrfmiddlewaretoken: '{{ csrf_token }}',
     };
 
-    ko.applyBindings(new Chief.ViewModels.InitiateDeploy(), $('#deploy-modal')[0]);
+    ko.applyBindings(new Captain.ViewModels.InitiateDeploy(), $('#deploy-modal')[0]);
 </script>
 {% endblock %}
 
 {% block content %}
-<img width="300" src="{% static 'chief/img/captain.png' %}" />
+<img width="300" src="{% static 'captain/img/captain.png' %}" />
 <hr />
 
 <table class="table table-striped">
@@ -135,7 +135,7 @@
                     branch to <code>origin</code> first using <code>scripts/rebuildstaging</code>
                 </div>
                 <!-- /ko -->
-                <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'chief_deploy' %}>
+                <form id="deploy-form" class="form-horizontal" method="POST" action={% url 'captain_deploy' %}>
                     {% csrf_token %}
                     <input type="hidden" name="env" data-bind="value: env" />
                     <div class="form-group">
