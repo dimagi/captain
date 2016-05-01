@@ -17,6 +17,7 @@ def update_code():
         sudo('git submodule update --init --recursive -q')
         # remove all untracked files, including submodules
         sudo("git clean -ffd")
+        sudo("find . -name '*.pyc' -delete")
 
 
 def staticfiles():
