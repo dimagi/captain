@@ -62,7 +62,7 @@ RQ_QUEUES = {
         'HOST': 'localhost',
         'PORT': 6379,
         'DB': 0,
-        'DEFAULT_TIMEOUT': 60 * 40,  # 40 minutes
+        'DEFAULT_TIMEOUT': 60 * 70,  # 70 minutes
     },
 }
 
